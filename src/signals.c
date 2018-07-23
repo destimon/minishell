@@ -14,11 +14,37 @@
 
 void				ft_sigint(int sig)
 {
-	printf("\n");
+	if (g_curr_job > 1)
+	{
+		sig = 0;
+		return ;
+	}
+	ft_putendl("");
 	show_prompt();
 }
 
-void			signals(void)
+void				ft_sigstop(int sig)
 {
-	signal(SIGINT, &ft_sigint));
+	sig = 0;
+	return ;
+}
+
+void				signals(void)
+{
+	signal(SIGINT, &ft_sigint);
+	signal(SIGTSTP, &ft_sigstop);
+}
+
+/*
+** This fucking norminette forces me do pain to the functions ... ...
+*/
+
+int					search_env(int *i)
+{
+	while (g_env[++(*i)])
+		if (ft_strstr(g_env[*i], "PATH="))
+		{
+			return (1);
+		}
+	return (0);
 }

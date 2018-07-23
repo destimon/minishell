@@ -100,12 +100,14 @@ void				ft_swapch(char **a, char **b);
 char				*ft_strjoin_free(char *s1, char *s2, _Bool s1b, _Bool s2b);
 int					ft_numlen(int num);
 void				ft_tabputs(char *str, _Bool endl);
-void 				ft_puts_except(const char *str, char ch);
-void 				ft_puts_except_rev(const char *str, char ch);
-int 				ft_free_twodm(char **arr);
+void				ft_puts_except(const char *str, char ch);
+void				ft_puts_except_rev(const char *str, char ch);
+int					ft_free_twodm(char **arr);
 char				*ft_realloc(char *ptr, size_t size);
 size_t				ft_strlench(const char *s, char ch);
 char				*ft_strdupch(const char *s1, char ch);
+int					ft_occpos(char *str, char occ);
+char				**ft_strsplit_two(char const *s, char c, char c2);
 
 /*
 ** LISTS.

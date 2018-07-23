@@ -12,9 +12,9 @@
 
 #include "libft.h"
 
-int 			ft_free_twodm(char **arr)
+int				ft_free_twodm(char **arr)
 {
-	int 		i;
+	int			i;
 
 	i = 0;
 	if (arr)

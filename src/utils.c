@@ -5,19 +5,19 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: dcherend <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/07/08 11:08:51 by dcherend          #+#    #+#             */
-/*   Updated: 2018/07/08 11:08:51 by dcherend         ###   ########.fr       */
+/*   Created: 2018/07/13 09:19:01 by dcherend          #+#    #+#             */
+/*   Updated: 2018/07/13 09:20:08 by dcherend         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-char			**g_get_env()
+char			**g_get_env(void)
 {
-	extern char **environ;
-	char 		**en;
-	int 		i;
-	int 		len;
+	extern char	**environ;
+	char		**en;
+	int			i;
+	int			len;
 
 	i = 0;
 	len = ft_elems(environ);
@@ -32,9 +32,9 @@ char			**g_get_env()
 	return (en);
 }
 
-void				g_free_env(void)
+void			g_free_env(void)
 {
-	int 			i;
+	int			i;
 
 	i = 0;
 	if (!g_env)
@@ -47,13 +47,13 @@ void				g_free_env(void)
 	free(g_env);
 }
 
-void			show_prompt()
+void			show_prompt(void)
 {
-	char 		*user;
-	char 		*path;
-	char 		tmp[PATH_MAX];
+	char		*user;
+	char		*path;
+	char		tmp[PATH_MAX];
 
-	user = get_var("USER=");
+	user = get_var("USER");
 	if (((getcwd(tmp, PATH_MAX))) != NULL)
 	{
 		ft_putstr(ANSI_BOLD_GREEN);
@@ -70,11 +70,11 @@ void			show_prompt()
 	}
 }
 
-char 			*get_path()
+char			*get_path(void)
 {
-	char 		path[PATH_MAX];
-	char 		*path_ptr;
-	char 		*slash;
+	char		path[PATH_MAX];
+	char		*path_ptr;
+	char		*slash;
 
 	if ((path_ptr = (getcwd(path, PATH_MAX))) != NULL)
 	{
@@ -86,32 +86,24 @@ char 			*get_path()
 	return (NULL);
 }
 
-char 			**get_envpaths(char *bin)
+char			**get_envpaths(char *bin)
 {
-	char 		**paths;
-	int 		i;
-	char 		*index;
-	char 		*tmp;
-	_Bool		check;
+	char		**paths;
+	int			i;
+	char		*index;
+	char		*tmp;
+	int			check;
 
 	check = 0;
-	i = 0;
-	while (g_env[i])
-	{
-		if (ft_strstr(g_env[i], "PATH="))
-		{
-			check = 1;
-			break;
-		}
-		i++;
-	}
+	i = -1;
+	check = search_env(&i);
 	if (check == 0)
 		return (NULL);
 	tmp = ft_strchr(g_env[i], '/');
-	paths = ft_strsplit(ft_strchr(g_env[i], '/'), ':') ?
-	: ft_strsplit(g_env[i], ':');
-	i = 0;
-	while (paths[i])
+	if (!(paths = ft_strsplit(ft_strchr(g_env[i], '/'), ':')))
+		paths = ft_strsplit(g_env[i], ':');
+	i = -1;
+	while (paths && paths[++i])
 	{
 		index = paths[i];
 		paths[i] = ft_strjoin_free(paths[i], "/", 0, 1);
@@ -119,7 +111,6 @@ char 			**get_envpaths(char *bin)
 		index = paths[i];
 		paths[i] = ft_strjoin(paths[i], bin);
 		free(index);
-		i++;
 	}
 	return (paths);
 }

@@ -6,27 +6,11 @@
 /*   By: dcherend <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/08 09:39:24 by dcherend          #+#    #+#             */
-/*   Updated: 2018/07/08 09:39:40 by dcherend         ###   ########.fr       */
+/*   Updated: 2018/07/17 13:35:00 by dcherend         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
-
-//◦ malloc, free
-//◦ access
-//◦ open, close, read, write
-//◦ opendir, readdir, closedir
-//◦ getcwd, chdir
-//◦ stat, lstat, fstat
-//◦ fork, execve
-//◦ wait, waitpid, wait3, wait4
-//◦ signal, kill
-//◦ exit
-
-//• builtins: echo, cd, setenv, unsetenv, env, exit.
-
-//	Strange loops in cmd_exec(cmd.c)
-//	Also need to work on echo and cd hardly
 
 int					is_user_a_goat(void)
 {
@@ -35,7 +19,7 @@ int					is_user_a_goat(void)
 
 void				free_env(void)
 {
-	int 			i;
+	int				i;
 
 	i = 0;
 	while (g_env[i])
@@ -46,15 +30,13 @@ void				free_env(void)
 	free(g_env);
 }
 
-int					main(int argc, char **argv)
+static void			init_loop(void)
 {
 	char			*line;
-	char 			**cmds;
-	int 			i;
+	char			**cmds;
+	int				i;
 
-	g_env = g_get_env();
-	signals();
-	while(is_user_a_goat())
+	while (is_user_a_goat())
 	{
 		i = -1;
 		show_prompt();
@@ -73,8 +55,15 @@ int					main(int argc, char **argv)
 			else
 				free(line);
 		}
-		system("leaks -q minishell");
 	}
+}
+
+int					main(void)
+{
+	g_env = g_get_env();
+	signals();
+	help_out();
+	init_loop();
 	free_env();
 	return (0);
 }

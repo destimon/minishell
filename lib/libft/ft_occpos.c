@@ -1,29 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error.c                                            :+:      :+:    :+:   */
+/*   ft_occpos.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dcherend <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/07/08 10:20:01 by dcherend          #+#    #+#             */
-/*   Updated: 2018/07/08 10:20:02 by dcherend         ###   ########.fr       */
+/*   Created: 2018/07/12 13:06:51 by dcherend          #+#    #+#             */
+/*   Updated: 2018/07/12 13:06:53 by dcherend         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minishell.h"
+#include "libft.h"
 
-void			unknown_cmd(char *cmd)
+int				ft_occpos(char *str, char occ)
 {
-	ft_putstr(cmd);
-	ft_putendl(": unknown command");
-}
+	int			i;
 
-void			cd_errors(char *err)
-{
-	if (err)
+	i = 0;
+	while (str[i])
 	{
-		ft_putstr("cd: ");
-		ft_putendl(err);
+		if (str[i] == occ)
+			return (i);
+		i++;
 	}
-	return ;
+	return (0);
 }

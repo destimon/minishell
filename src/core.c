@@ -12,13 +12,16 @@
 
 #include "../inc/minishell.h"
 
-# define CMD 0
+#define CMD 0
 
-# define F_CMP(x, y) ft_strcmp(x, y)
+#define F_CMP(x, y) ft_strcmp(x, y)
 
 void		commands_switch(char **query)
 {
-	if (F_CMP(query[CMD], ".") == 0 || F_CMP(query[CMD], "..") == 0 ||
+	g_curr_job = -1;
+	if (F_CMP(query[CMD], "help") == 0)
+		help_out();
+	else if (F_CMP(query[CMD], ".") == 0 || F_CMP(query[CMD], "..") == 0 ||
 		F_CMP(query[CMD], "/") == 0 || F_CMP(query[CMD], "~") == 0)
 		cmd_cd(&query[0]);
 	else if (F_CMP(query[CMD], "echo") == 0)
@@ -32,19 +35,22 @@ void		commands_switch(char **query)
 	else if (F_CMP(query[CMD], "unsetenv") == 0)
 		cmd_unsetenv(&query[1]);
 	else if (F_CMP(query[CMD], "exit") == 0)
-		exit (0);
+	{
+		g_free_env();
+		exit(0);
+	}
 	else if (cmd_exec(query[0], &query[0]) == 0)
 		unknown_cmd(query[CMD]);
 }
 
 void		commands_space(char *input)
 {
-	char 	**query;
-	int 	i;
+	char	**query;
+	int		i;
 
 	if (!input)
 		return ;
-	query = ft_strsplit(input, ' ');
+	query = ft_strsplit_two(input, ' ', '\t');
 	free(input);
 	if (!ft_elems(query))
 	{

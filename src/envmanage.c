@@ -14,8 +14,8 @@
 
 char			**realloc_env(size_t size)
 {
-	char 		**new;
-	int 		i;
+	char		**new;
+	int			i;
 
 	i = 0;
 	new = (char**)malloc(sizeof(char*) * (size + 1));
@@ -25,7 +25,7 @@ char			**realloc_env(size_t size)
 		free(g_env[i]);
 		i++;
 	}
-	while (i < size)
+	while (i < (int)size)
 	{
 		new[i] = NULL;
 		i++;
@@ -38,8 +38,8 @@ char			**realloc_env(size_t size)
 
 int				is_exist(char **todel, char *env)
 {
-	char 		*cut;
-	int 		i;
+	char		*cut;
+	int			i;
 
 	cut = var_namecut(env);
 	i = 0;

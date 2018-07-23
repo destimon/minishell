@@ -12,9 +12,9 @@
 
 #include "libft.h"
 
-void 			ft_puts_except(const char *str, char ch)
+void			ft_puts_except(const char *str, char ch)
 {
-	int 		i;
+	int			i;
 
 	i = 0;
 	while (str[i])

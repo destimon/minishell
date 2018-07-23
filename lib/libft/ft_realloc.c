@@ -14,8 +14,8 @@
 
 char		*ft_realloc(char *ptr, size_t size)
 {
-	char 	*new;
-	int 	i;
+	char	*new;
+	int		i;
 
 	i = 0;
 	new = (char*)malloc(size);

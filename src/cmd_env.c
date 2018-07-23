@@ -29,9 +29,8 @@ void			cmd_env(char **args)
 
 int				cmd_resetenv(char *name, char *env)
 {
-	int 		i;
-	int			j;
-	char 		*tmp;
+	int			i;
+	char		*tmp;
 
 	i = 0;
 	while (g_env[i])
@@ -60,15 +59,15 @@ void			cmd_setenv(char **envs)
 	i = -1;
 	while (envs[++i])
 	{
-		if (ft_strchr(envs[i], '='))
+		if (ft_strchr(envs[i], '=') && ft_strlen(envs[i]) > 1)
 		{
 			varname = var_namecut(envs[i]);
-			if ((tmp = get_var(varname)))
+			if (ft_strlen(varname) && (tmp = get_var(varname)))
 			{
 				cmd_resetenv(varname, envs[i]);
 				free(tmp);
 			}
-			else
+			else if (ft_strlen(varname))
 			{
 				size = ft_elems(g_env);
 				g_env = realloc_env(size + 1);
@@ -81,8 +80,8 @@ void			cmd_setenv(char **envs)
 
 static int		isthere_changes(char **envs)
 {
-	int 		i;
-	int 		count;
+	int			i;
+	int			count;
 
 	count = 0;
 	i = 0;
@@ -97,11 +96,11 @@ static int		isthere_changes(char **envs)
 
 void			cmd_unsetenv(char **envs)
 {
-	int 		size;
-	char 		**new;
-	int 		i;
-	int 		j;
-	int 		elems;
+	char		**new;
+	int			size;
+	int			i;
+	int			j;
+	int			elems;
 
 	j = 0;
 	i = 0;
